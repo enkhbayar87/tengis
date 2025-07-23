@@ -1,29 +1,6 @@
+import type { ApiOptions, ApiResponse, LoginResponse, User } from './types';
+
 const API_BASE_URL = 'http://localhost:3001/api';
-
-interface ApiOptions {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: string;
-}
-
-interface ApiResponse<T = any> {
-  success: boolean;
-  message: string;
-  data?: T;
-}
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  lastLogin?: string;
-}
-
-interface LoginResponse {
-  user: User;
-  token: string;
-}
 
 // API дуудалтын ерөнхий функц
 const apiCall = async <T = any>(endpoint: string, options: ApiOptions = {}): Promise<ApiResponse<T>> => {
