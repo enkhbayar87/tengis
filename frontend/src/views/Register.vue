@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <h2>Нэвтрэх</h2>
-      <form @submit.prevent="handleLogin" class="login-form">
+      <h2>Бүртгүүлэх</h2>
+      <form @submit.prevent="handleRegister" class="login-form">
         <div class="form-group">
           <label for="username">Хэрэглэгчийн нэр:</label>
           <input 
@@ -14,6 +14,16 @@
           />
         </div>
         <div class="form-group">
+          <label for="email">Нууц үг:</label>
+          <input 
+            type="email" 
+            id="email" 
+            v-model="email" 
+            required 
+            placeholder="Email оруулна уу"
+          />
+        </div>
+        <div class="form-group">
           <label for="password">Нууц үг:</label>
           <input 
             type="password" 
@@ -22,11 +32,8 @@
             required 
             placeholder="Нууц үгээ оруулна уу"
           />
-        </div>
-        <button type="submit" class="login-btn">Нэвтрэх</button>
-        <div class="register-link">
-          <router-link to="/register">Register</router-link>
-        </div>
+        </div>       
+        <button type="submit" class="login-btn">Бүртгүүлэх</button>
       </form>
       <div v-if="errorMessage" class="error-message">
         {{ errorMessage }}
@@ -45,14 +52,15 @@ const username = ref('')
 const password = ref('')
 const errorMessage = ref('')
 const isLoading = ref(false)
+const email = ref('')
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   try {
     isLoading.value = true
     errorMessage.value = ''
 
     // API дуудалт
-    const response = await authAPI.login(username.value, password.value)
+    const response = await authAPI.register(username.value, email.value, password.value)
     
     // Data байгаа эсэхийг шалгах
     if (!response.data) {
@@ -152,24 +160,5 @@ const handleLogin = async () => {
   color: #c33;
   border-radius: 5px;
   text-align: center;
-}
-
-.register-link {
-  margin-top: 1.5rem;
-  text-align: right;
-}
-
-.register-link a {
-  color: #667eea;
-  text-decoration: underline;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: color 0.2s;
-  font-style: italic;
-}
-
-.register-link a:hover {
-  color: #764ba2;
-  text-decoration: underline;
 }
 </style> 
