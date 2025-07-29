@@ -22,3 +22,16 @@
     user: User;
     token: string;
   }
+
+  export interface Country {
+    name: string;
+    code: string;
+    phoneCode: string
+  }
+
+  export interface Address {
+    prefecture: string;
+    city: string;
+    district: string;
+    prefcode: string;
+  }
