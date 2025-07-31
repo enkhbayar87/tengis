@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-card">
       <h2>Бүртгүүлэх</h2>
-      <form  class="login-form">
+      <form  @submit.prevent="handleRegister" class="login-form">
         <div class="form-group">
           <label for="username">Хэрэглэгчийн нэр:</label>
           <input 
@@ -80,7 +80,7 @@
           <label for="phone">Утасны дугаар:</label>
           <div class="phone-input-group">
             <select 
-              v-model="formData.selectedCountry" 
+              v-model="formData.country" 
               class="country-select"
               @change="onCountryChange"
             >
@@ -140,6 +140,7 @@
             v-model="formData.address.district"
           />
         </div>
+
         <button type="submit" class="login-btn">Бүртгүүлэх</button>
       </form>
       <div v-if="errorMessage" class="error-message">
@@ -150,7 +151,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { authAPI } from '../services/api'
 import type { Country, Address } from '../services/types'
@@ -167,7 +168,7 @@ const formData = reactive({
   gender: '',
   birthday: new Date().toISOString().split('T')[0],
   phoneNumber: '',
-  selectedCountry: '',
+  country: '',
   address: {
     prefecture: '',
     city: '',
@@ -203,11 +204,14 @@ const fetchCountries = async () => {
 // Улс сонгогдох үед
 const onCountryChange = () => {
   // Энд нэмэлт логик бичиж болно
-  console.log('Сонгосон улс:', formData.selectedCountry)
+  console.log('Сонгосон улс:', formData.country)
 }
 
 // Компонент ачаалагдахад улсын жагсаалт татах
-fetchCountries()
+onMounted(() => {
+  fetchCountries()
+  onCountryChange() // Хуудас ачаалагдах үед onCountryChange дуудах
+})
 
 const fetchPostalCodes = async () => {
   try {
@@ -215,19 +219,10 @@ const fetchPostalCodes = async () => {
     
     const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${formData.postcode}`)
     const data = await response.json()
-    
-    console.log('📡 API response:', data)
-    console.log('📊 Response status:', data.status)
-    console.log('📋 Results:', data.results)
-    
+
     if (data.status === 200 && data.results && data.results.length > 0) {
       const result = data.results[0]
-      
-      console.log('🎯 Эхний result:', result)
-      console.log('🏛️ address1 (prefecture):', result.address1)
-      console.log('🏙️ address2 (city):', result.address2)
-      console.log('🏘️ address3 (district):', result.address3)
-      
+
       // formData.address-д утгуудыг оноох
       formData.address.prefecture = result.address1 || ''
       formData.address.city = result.address2 || ''
@@ -242,11 +237,7 @@ const fetchPostalCodes = async () => {
       formData.address.district = ''
     }
   } catch (error) {
-    console.error('Postal code татахад алдаа:', error)
-    // Алдаа гарвал хоосон болгох
-    formData.address.prefecture = ''
-    formData.address.city = ''
-    formData.address.district = ''
+      console.error('Postal code татахад алдаа:', error)
   }
 }
 
@@ -271,8 +262,12 @@ const handleRegister = async () => {
       formData.lastname,
       formData.gender,
       formData.birthday,
-      formData.selectedCountry,
-      formData.phoneNumber
+      formData.phoneNumber,
+      formData.country,
+      formData.address.prefecture,
+      formData.address.city,
+      formData.address.district,
+      formData.postcode
     )
     
     // Data байгаа эсэхийг шалгах

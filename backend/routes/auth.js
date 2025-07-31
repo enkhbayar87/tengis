@@ -19,7 +19,37 @@ router.post('/register', [
     .withMessage('Зөв и-мэйл хаяг оруулна уу'),
   body('password')
     .isLength({ min: 6 })
-    .withMessage('Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой')
+    .withMessage('Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой'),
+  body('firstname')
+    .notEmpty()
+    .withMessage('Нэр оруулна уу'),
+  body('lastname')
+    .notEmpty()
+    .withMessage('Овог оруулна уу'),
+  body('gender')
+    .notEmpty()
+    .withMessage('Хүйс оруулна уу'),
+  body('birthday')
+    .notEmpty()
+    .withMessage('Төрсөн огноо оруулна уу'),
+  body('phoneNumber')
+    .notEmpty()
+    .withMessage('Утасны дугаар оруулна уу'),
+  body('country')
+    .notEmpty()
+    .withMessage('Улс оруулна уу'),
+  body('prefecture')
+    .notEmpty()
+    .withMessage('Мужийн нэр оруулна уу'),
+  body('city')
+    .notEmpty()
+    .withMessage('Хотын нэр оруулна уу'),
+  body('district')
+    .notEmpty()
+    .withMessage('Дүүрэгийн нэр оруулна уу'),
+  body('postcode')
+    .notEmpty()
+    .withMessage('Шуудангийн дугаар оруулна уу'),
 ], async (req, res) => {
   try {
     // Validation алдаа шалгах
@@ -32,7 +62,21 @@ router.post('/register', [
       });
     }
 
-    const { username, email, password } = req.body;
+    const {
+      username, 
+      email, 
+      password,
+      firstname,
+      lastname,
+      gender,
+      birthday,
+      phoneNumber,
+      country,
+      prefecture,
+      city,
+      district,
+      postcode
+    } = req.body;
 
     // Хэрэглэгч одоо байгаа эсэхийг шалгах
     const existingUserByUsername = await User.findByUsername(username);
@@ -49,7 +93,17 @@ router.post('/register', [
     const user = await User.create({
       username,
       email,
-      password
+      password,
+      firstname,
+      lastname,
+      gender,
+      birthday,
+      phoneNumber,
+      country,
+      prefecture,
+      city,
+      district,
+      postcode
     });
 
     // Token үүсгэх
@@ -63,7 +117,16 @@ router.post('/register', [
           id: user._id,
           username: user.username,
           email: user.email,
-          role: user.role
+          role: user.role,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          gender: user.gender,
+          birthday: user.birthday,
+          country: user.country,
+          prefecture: user.prefecture,
+          city: user.city,
+          district: user.district,
+          postcode: user.postcode
         },
         token
       }

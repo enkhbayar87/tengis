@@ -48,10 +48,10 @@ export const authAPI = {
   },
 
   // Бүртгүүлэх
-  register: async (username: string, email: string, password: string, firstname: string, lastname: string, gender: string, birthday: string, selectedCountry: string, phoneNumber: string): Promise<ApiResponse<LoginResponse>> => {
+  register: async (username: string, email: string, password: string, firstname: string, lastname: string, gender: string, birthday: string, phoneNumber: string, country: string, prefecture: string, city: string, district: string, postcode: string): Promise<ApiResponse<LoginResponse>> => {
     return apiCall<LoginResponse>('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ username, email, password, firstname, lastname, gender, birthday, selectedCountry, phoneNumber })
+      body: JSON.stringify({ username, email, password, firstname, lastname, gender, birthday, phoneNumber, country, prefecture, city, district, postcode })
     });
   },
 

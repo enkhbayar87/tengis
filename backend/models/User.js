@@ -37,11 +37,21 @@ class User {
       .input('username', sql.NVarChar, userData.username)
       .input('email', sql.NVarChar, userData.email)
       .input('password', sql.NVarChar, hashedPassword)
+      .input('firstname', sql.NVarChar, userData.firstname)
+      .input('lastname', sql.NVarChar, userData.lastname)
+      .input('gender', sql.NVarChar, userData.gender)
+      .input('birthdate', sql.Date, userData.birthday)
+      .input('phone', sql.NVarChar, userData.phoneNumber)
+      .input('country', sql.NVarChar, userData.country)
+      .input('prefecture', sql.NVarChar, userData.prefecture)
+      .input('city', sql.NVarChar, userData.city)
+      .input('district', sql.NVarChar, userData.district)
+      .input('postcode', sql.NVarChar, userData.postcode)
       .input('role', sql.NVarChar, userData.role || 'user')
       .query(`
-        INSERT INTO users (username, email, password, role)
-        OUTPUT INSERTED.id, INSERTED.username, INSERTED.email, INSERTED.role, INSERTED.createdAt
-        VALUES (@username, @email, @password, @role)
+        INSERT INTO users (username, email, password, role, firstname, lastname, gender, birthdate, phone, country, prefecture, city, district, postcode)
+        OUTPUT INSERTED.id, INSERTED.username, INSERTED.email, INSERTED.role, INSERTED.firstname, INSERTED.lastname, INSERTED.gender, INSERTED.birthdate, INSERTED.phone, INSERTED.country, INSERTED.prefecture, INSERTED.city, INSERTED.district, INSERTED.postcode, INSERTED.createdAt
+        VALUES (@username, @email, @password, @role, @firstname, @lastname, @gender, @birthdate, @phone, @country, @prefecture, @city, @district, @postcode)
       `);
     
     return result.recordset[0];
