@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import Index from '../views/Index.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/login', // Үндсэн хуудас руу ормогц нэвтрэх хуудас руу шилжүүлэх
+      name: 'index', // Үндсэн хуудас руу ормогц нэвтрэх хуудас руу шилжүүлэх
+      component: Index,
     },
     {
       path: '/home',

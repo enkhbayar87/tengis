@@ -1,101 +1,94 @@
 <template>
-    <div id="app">
-      <nav class="navbar">
-        <div class="nav-container">
-          <router-link to="/" class="nav-brand">Миний Апп</router-link>
-          <div class="nav-links">
-            <router-link to="/home" class="nav-link">Нүүр</router-link>
-            <router-link to="/about" class="nav-link">Тухай</router-link>
-            <router-link to="/login" class="nav-link">Нэвтрэх</router-link>
-          </div>
-        </div>
-      </nav>
-      <main class="main-content">
-        <router-view />
-      </main>
+  <nav class="navbar">
+    <div class="nav-container">
+      <router-link to="/" class="nav-brand">Миний Апп</router-link>
+      <div class="nav-links">
+        <router-link to="/home" class="nav-link">Нүүр</router-link>
+        <router-link to="/about" class="nav-link">Тухай</router-link>
+        <router-link to="/login" class="nav-link">Нэвтрэх</router-link>
+      </div>
     </div>
-  </template>
-  
-  <script setup>
-  // Router-view нь автоматаар маршрутуудыг харуулна
-  </script>
-  
-  <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    position: fixed;
-    top: 0;
-    left: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-  }
-  
-  #app {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .navbar {
-    background: #333;
-    color: white;
-    padding: 1rem 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    z-index: 1000;
-  }
-  
+  </nav>
+</template>
+
+<script setup>
+// Router-view нь автоматаар маршрутуудыг харуулна
+</script>
+
+<style scoped>
+.navbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.nav-brand:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.nav-link.router-link-active {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .nav-container {
-    max-width: 100vh;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .nav-brand {
-    color: white;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
+    padding: 0 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
   
   .nav-links {
-    display: flex;
-    gap: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .nav-link {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
-  
-  .nav-link:hover {
-    background: #555;
-  }
-  
-  .main-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    flex: 1;
-    z-index: 1;
-  }
-  </style>
+}
+</style>
