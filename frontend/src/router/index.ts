@@ -8,6 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'index', // Үндсэн хуудас руу ормогц нэвтрэх хуудас руу шилжүүлэх
       component: Index,
+      meta: { chrome: false },
     },
     {
       path: '/home',
@@ -26,11 +27,13 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
+      meta: { chrome: false },
     },
     {
       path: '/register',
       name: 'register',
       component: () => import('../views/Register.vue'),
+      meta: { chrome: false },
     },    
     {
       path: '/dashboard',

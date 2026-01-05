@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-container">
-    <header class="dashboard-header">
-      <h1>Dashboard</h1>
-      <button @click="handleLogout" class="logout-btn">Гарах</button>
-    </header>
-    
     <main class="dashboard-content">
+      <div class="dashboard-top">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <button @click="handleLogout" class="logout-btn">Гарах</button>
+      </div>
+
       <div class="welcome-card">
         <h2>Тавтай морил!</h2>
         <p>Та амжилттай нэвтэрлээ. Dashboard хуудас руу тавтай морил.</p>
@@ -49,22 +49,7 @@ const handleLogout = () => {
 
 <style scoped>
 .dashboard-container {
-  min-height: 100vh;
-  background: #f5f7fa;
-}
-
-.dashboard-header {
-  background: white;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-header h1 {
-  margin: 0;
-  color: #333;
+  background: transparent;
 }
 
 .logout-btn {
@@ -83,9 +68,21 @@ const handleLogout = () => {
 }
 
 .dashboard-content {
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-title {
+  margin: 0;
+  color: #333;
 }
 
 .welcome-card {
