@@ -1,14 +1,23 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-shell">
     <TheHeader />
-    <main class="main-content">
-      <router-view />
-    </main>
+
+    <div class="app-body">
+      <TheSidebar />
+
+      <main class="app-main">
+        <router-view />
+      </main>
+    </div>
+
+    <TheFooter />
   </div>
 </template>
 
 <script setup>
 import TheHeader from './components/TheHeader.vue';
+import TheSidebar from './components/TheSidebar.vue';
+import TheFooter from './components/TheFooter.vue';
 </script>
 
 <style>
@@ -24,14 +33,21 @@ body {
   background-color: #f5f5f5;
 }
 
-#app {
+.app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.main-content {
+.app-body {
   flex: 1;
-  padding-top: 0;
+  display: flex;
+  min-height: 0;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  padding: 1.25rem;
 }
 </style>
