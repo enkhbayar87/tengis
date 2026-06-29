@@ -1,6 +1,9 @@
 import type { ApiOptions, ApiResponse, LoginResponse, User } from './types';
 
-const API_BASE_URL = 'http://localhost:3001/api';
+// Гол санаа:
+// - Dev үед: Vite proxy ашиглаад relative "/api" гэж дуудах (5173 -> 8080 руу дамжина)
+// - Prod үед: хэрэгтэй бол VITE_API_BASE_URL env-ээр override хийж болно
+const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL ?? '/api';
 
 // API дуудалтын ерөнхий функц
 const apiCall = async <T = any>(endpoint: string, options: ApiOptions = {}): Promise<ApiResponse<T>> => {
@@ -23,6 +26,17 @@ const apiCall = async <T = any>(endpoint: string, options: ApiOptions = {}): Pro
       ...options,
       headers
     });
+
+    // "Unexpected token '<'" гэдэг нь ихэнхдээ JSON хүлээгээд HTML буцааж авснаас болдог.
+    // Тиймээс JSON биш ирвэл илүү ойлгомжтой алдаа гаргая.
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(
+        `API JSON биш хариу буцаалаа (Content-Type: ${contentType}). ` +
+        `Эхний 80 тэмдэгт: ${text.slice(0, 80)}`
+      );
+    }
 
     const data = await response.json();
 
